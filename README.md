@@ -21,6 +21,7 @@ EasyPoi Excel & Word Utils
 
 [testProject](http://git.oschina.net/jueyue/easypoi-test): http://git.oschina.net/jueyue/easypoi-test
 
+[导出时添加批注以及设置标题样式](https://www.jianshu.com/p/77e69ef7b254)
 
 ---------------------------
 The main features of EasyPoi
