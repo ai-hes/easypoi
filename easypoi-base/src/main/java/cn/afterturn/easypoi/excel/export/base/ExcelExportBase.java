@@ -18,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -94,7 +95,7 @@ public abstract class ExcelExportBase extends ExportBase {
             } else {
                 Object value = getCellValue(entity, t);
 
-                if (entity.getType() == BaseEntityTypeConstants.StringType) {
+                if (entity.getType() == BaseEntityTypeConstants.STRING_TYPE) {
                     createStringCell(row, cellNum++, value == null ? "" : value.toString(),
                             index % 2 == 0 ? getStyles(false, entity) : getStyles(true, entity),
                             entity);
@@ -104,7 +105,7 @@ public abstract class ExcelExportBase extends ExportBase {
                                         row.getSheet().getWorkbook().getCreationHelper(), t,
                                         entity.getName(), value));
                     }
-                } else if (entity.getType() == BaseEntityTypeConstants.DoubleType) {
+                } else if (entity.getType() == BaseEntityTypeConstants.DOUBLE_TYPE) {
                     createDoubleCell(row, cellNum++, value == null ? "" : value.toString(),
                             index % 2 == 0 ? getStyles(false, entity) : getStyles(true, entity),
                             entity);
@@ -211,7 +212,7 @@ public abstract class ExcelExportBase extends ExportBase {
         for (int k = 0, paramSize = excelParams.size(); k < paramSize; k++) {
             entity = excelParams.get(k);
             Object value = getCellValue(entity, obj);
-            if (entity.getType() == BaseEntityTypeConstants.StringType) {
+            if (entity.getType() == BaseEntityTypeConstants.STRING_TYPE) {
                 createStringCell(row, cellNum++, value == null ? "" : value.toString(),
                         row.getRowNum() % 2 == 0 ? getStyles(false, entity) : getStyles(true, entity),
                         entity);
@@ -221,7 +222,7 @@ public abstract class ExcelExportBase extends ExportBase {
                                     row.getSheet().getWorkbook().getCreationHelper(), obj, entity.getName(),
                                     value));
                 }
-            } else if (entity.getType() == BaseEntityTypeConstants.DoubleType) {
+            } else if (entity.getType() == BaseEntityTypeConstants.DOUBLE_TYPE) {
                 createDoubleCell(row, cellNum++, value == null ? "" : value.toString(),
                         index % 2 == 0 ? getStyles(false, entity) : getStyles(true, entity), entity);
                 if (entity.isHyperlink()) {
@@ -245,7 +246,7 @@ public abstract class ExcelExportBase extends ExportBase {
         Cell cell = row.createCell(index);
         if (style != null && style.getDataFormat() > 0 && style.getDataFormat() < 12) {
             cell.setCellValue(Double.parseDouble(text));
-            cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+            cell.setCellType(CellType.NUMERIC);
         } else {
             RichTextString Rtext;
             if (type.equals(ExcelType.HSSF)) {
@@ -270,7 +271,7 @@ public abstract class ExcelExportBase extends ExportBase {
         if (text != null && text.length() > 0) {
             cell.setCellValue(Double.parseDouble(text));
         }
-        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+        cell.setCellType(CellType.NUMERIC);
         if (style != null) {
             cell.setCellStyle(style);
         }

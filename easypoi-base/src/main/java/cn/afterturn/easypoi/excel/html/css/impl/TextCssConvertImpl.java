@@ -1,12 +1,14 @@
 package cn.afterturn.easypoi.excel.html.css.impl;
 
-import static cn.afterturn.easypoi.excel.html.entity.HtmlCssConstant.*;
-
+import cn.afterturn.easypoi.excel.html.css.ICssConvertToExcel;
+import cn.afterturn.easypoi.excel.html.css.ICssConvertToHtml;
+import cn.afterturn.easypoi.excel.html.entity.style.CellStyleEntity;
+import cn.afterturn.easypoi.util.PoiCssUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.hssf.util.HSSFColor.BLACK;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -14,10 +16,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
-import cn.afterturn.easypoi.excel.html.css.ICssConvertToExcel;
-import cn.afterturn.easypoi.excel.html.css.ICssConvertToHtml;
-import cn.afterturn.easypoi.excel.html.entity.style.CellStyleEntity;
-import cn.afterturn.easypoi.util.PoiCssUtils;
+import static cn.afterturn.easypoi.excel.html.entity.HtmlCssConstant.BOLD;
+import static cn.afterturn.easypoi.excel.html.entity.HtmlCssConstant.ITALIC;
+import static cn.afterturn.easypoi.excel.html.entity.HtmlCssConstant.UNDERLINE;
+
+//import org.apache.poi.hssf.util.HSSFColor.BLACK;
 
 public class TextCssConvertImpl implements ICssConvertToExcel, ICssConvertToHtml {
 
@@ -41,7 +44,8 @@ public class TextCssConvertImpl implements ICssConvertToExcel, ICssConvertToHtml
             font.setFontHeightInPoints((short) fontSize);
         }
         if (BOLD.equals(style.getFont().getWeight())) {
-            font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            //font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            font.setBold(true);
         }
         String fontFamily = style.getFont().getFamily();
         if (StringUtils.isNotBlank(fontFamily)) {
@@ -69,7 +73,7 @@ public class TextCssConvertImpl implements ICssConvertToExcel, ICssConvertToHtml
     private void setFoutForHSSF(Font font, Workbook workbook, String colorStr) {
         HSSFColor color = PoiCssUtils.parseColor((HSSFWorkbook) workbook, colorStr);
         if (color != null) {
-            if (color.getIndex() != BLACK.index) {
+            if (color.getIndex() != HSSFColorPredefined.BLACK.getIndex()) {
                 font.setColor(color.getIndex());
             }
         }

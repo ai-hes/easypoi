@@ -105,6 +105,7 @@ public class ExcelBatchExportServer extends ExcelExportServer {
         return workbook;
     }
 
+    @Override
     protected void insertDataToSheet(Workbook workbook, ExportParams entity,
                                      List<ExcelExportEntity> entityList, Collection<?> dataSet,
                                      Sheet sheet) {

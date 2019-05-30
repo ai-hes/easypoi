@@ -1,15 +1,5 @@
 package cn.afterturn.easypoi.excel.html.helper;
 
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER_SELECTION;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_FILL;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_JUSTIFY;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_LEFT;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_RIGHT;
-import static org.apache.poi.ss.usermodel.CellStyle.VERTICAL_BOTTOM;
-import static org.apache.poi.ss.usermodel.CellStyle.VERTICAL_CENTER;
-import static org.apache.poi.ss.usermodel.CellStyle.VERTICAL_TOP;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,23 +9,25 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import cn.afterturn.easypoi.util.PoiPublicUtil;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import cn.afterturn.easypoi.util.PoiPublicUtil;
 
 /**
  * 样式帮助类
@@ -48,12 +40,12 @@ public class StylerHelper {
 
     private static final String             DEFAULTS_CLASS     = "excelDefaults";
 
-    private static final Map<Short, String> ALIGN              = PoiPublicUtil.mapFor(ALIGN_LEFT,
-        "left", ALIGN_CENTER, "center", ALIGN_RIGHT, "right", ALIGN_FILL, "left", ALIGN_JUSTIFY,
-        "left", ALIGN_CENTER_SELECTION, "center");
+    private static final Map<Short, String> ALIGN              = PoiPublicUtil.mapFor(HorizontalAlignment.LEFT,
+        "left", HorizontalAlignment.CENTER, "center", HorizontalAlignment.RIGHT, "right", HorizontalAlignment.FILL, "left", HorizontalAlignment.JUSTIFY,
+        "left", HorizontalAlignment.CENTER_SELECTION, "center");
 
     private static final Map<Short, String> VERTICAL_ALIGN     = PoiPublicUtil
-        .mapFor(VERTICAL_BOTTOM, "bottom", VERTICAL_CENTER, "middle", VERTICAL_TOP, "top");
+        .mapFor(VerticalAlignment.BOTTOM, "bottom", VerticalAlignment.CENTER, "middle",  VerticalAlignment.TOP, "top");
 
     private Formatter                       out;
 
@@ -150,15 +142,16 @@ public class StylerHelper {
     }
 
     private void styleContents(CellStyle style) {
-        if (style.getAlignment() != 2) {
-            styleOut("text-align", style.getAlignment(), ALIGN);
-            styleOut("vertical-align", style.getAlignment(), VERTICAL_ALIGN);
-        }
+        // TODO 了解styleOut的用法
+        //if (style.getAlignment() != HorizontalAlignment.CENTER_SELECTION) {
+        //    styleOut("text-align", style.getAlignment(), ALIGN);
+        //    styleOut("vertical-align", style.getAlignment(), VERTICAL_ALIGN);
+        //}
         helper.colorStyles(style, out);
     }
 
     private void fontStyle(Font font) {
-        if (font.getBoldweight() >= Font.BOLDWEIGHT_BOLD) {
+        if (font.getBold()) {
             out.format("  font-weight: bold;%n");
         }
         if (font.getItalic()) {
@@ -213,7 +206,7 @@ public class StylerHelper {
         private final HSSFWorkbook wb;
         private final HSSFPalette  colors;
 
-        private HSSFColor hssfAuto = new HSSFColor.AUTOMATIC();
+        private HSSFColor hssfAuto = HSSFColorPredefined.AUTOMATIC.getColor();
 
         public HSSFHtmlHelper(HSSFWorkbook wb) {
             this.wb = wb;

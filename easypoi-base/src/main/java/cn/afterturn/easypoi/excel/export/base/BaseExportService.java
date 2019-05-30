@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -253,7 +254,8 @@ public abstract class BaseExportService extends ExportCommonService {
         Cell cell = row.createCell(index);
         if (style != null && style.getDataFormat() > 0 && style.getDataFormat() < 12) {
             cell.setCellValue(Double.parseDouble(text));
-            cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+            //cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+            cell.setCellType(CellType.NUMERIC);
         } else {
             RichTextString rtext;
             if (type.equals(ExcelType.HSSF)) {
@@ -278,7 +280,7 @@ public abstract class BaseExportService extends ExportCommonService {
         if (text != null && text.length() > 0) {
             cell.setCellValue(Double.parseDouble(text));
         }
-        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+        cell.setCellType(CellType.NUMERIC);
         if (style != null) {
             cell.setCellStyle(style);
         }

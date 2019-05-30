@@ -53,8 +53,6 @@ public final class ExcelCache {
                 }
             }
             return wb;
-        } catch (InvalidFormatException e) {
-            LOGGER.error(e.getMessage(), e);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         } finally {

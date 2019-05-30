@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -87,7 +88,7 @@ public class ExcelExportServer extends ExcelExportBase {
             row = sheet.createRow(1);
             row.setHeight(entity.getSecondTitleHeight());
             CellStyle style = workbook.createCellStyle();
-            style.setAlignment(CellStyle.ALIGN_RIGHT);
+            style.setAlignment(HorizontalAlignment.RIGHT);
             createStringCell(row, 0, entity.getSecondTitle(), style, null);
             for (int i = 1; i <= feildWidth; i++) {
                 createStringCell(row, i, "",

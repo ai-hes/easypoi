@@ -19,6 +19,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.export.styler.ExcelExportStylerDefaultImpl;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 
 /**
  * Excel 导出参数
@@ -70,11 +71,13 @@ public class ExportParams extends ExcelBaseParams {
     /**
      * 表头颜色
      */
-    private short     color             = HSSFColor.WHITE.index;
+    //private short     color             = HSSFColor.WHITE.index;
+    private short     color             = HSSFColorPredefined.WHITE.getIndex();
     /**
      * 属性说明行的颜色 例如:HSSFColor.SKY_BLUE.index 默认
      */
-    private short     headerColor       = HSSFColor.SKY_BLUE.index;
+    //private short     headerColor       = HSSFColor.SKY_BLUE.index;
+    private short     headerColor       = HSSFColorPredefined.SKY_BLUE.getIndex();
     /**
      * Excel 导出版本
      */

@@ -13,6 +13,7 @@
  */
 package cn.afterturn.easypoi.excel.imports;
 
+import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -167,7 +168,9 @@ public class ExcelImportServer extends ImportBaseService {
             if (etarget != null) {
                 targetId = etarget.value();
             }
-            getAllExcelField(targetId, fileds, excelParams, excelCollection, pojoClass, null);
+            // TODO 记得校验
+            getAllExcelField(targetId, fileds, excelParams, excelCollection, pojoClass, null,pojoClass.getAnnotation(
+                ExcelEntity.class));
         }
         Iterator<Row> rows = sheet.rowIterator();
         for (int j = 0; j < params.getTitleRows(); j++) {
@@ -372,7 +375,7 @@ public class ExcelImportServer extends ImportBaseService {
         for (int i = params.getStartSheetIndex(); i < params.getStartSheetIndex()
                 + params.getSheetNum(); i++) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(" start to read excel by is ,startTime is {}", new Date().getTime());
+                LOGGER.debug(" start to read excel by is ,startTime is {}", System.currentTimeMillis());
             }
             if (isXSSFWorkbook) {
                 pictures = PoiPublicUtil.getSheetPictrues07((XSSFSheet) book.getSheetAt(i),
@@ -382,16 +385,16 @@ public class ExcelImportServer extends ImportBaseService {
                         (HSSFWorkbook) book);
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(" end to read excel by is ,endTime is {}", new Date().getTime());
+                LOGGER.debug(" end to read excel by is ,endTime is {}", System.currentTimeMillis());
             }
             result.addAll(importExcel(result, book.getSheetAt(i), pojoClass, params, pictures));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(" end to read excel list by pos ,endTime is {}", new Date().getTime());
+                LOGGER.debug(" end to read excel list by pos ,endTime is {}", System.currentTimeMillis());
             }
             if (params.isReadSingleCell()) {
                 readSingleCell(importResult, book.getSheetAt(i), params);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(" read Key-Value ,endTime is {}", new Date().getTime());
+                    LOGGER.debug(" read Key-Value ,endTime is {}", System.currentTimeMillis());
                 }
             }
         }
